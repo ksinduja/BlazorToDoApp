@@ -1,0 +1,106 @@
+@using BlazorToDoListApp.Models
+@rendermode InteractiveServer
+
+<PageTitle>ToDo List</PageTitle>
+
+
+<div class="form-group mt-3">
+    <label for="taskName">Task Name</label>
+    <input type="text" id="taskName" class="form-control" @bind="taskName" placeholder="Enter task name" />
+</div>
+<div class="form-group mt-3">
+    <label for="taskDescription">Description</label>
+    <textarea id="taskDescription" class="form-control" @bind="taskDescription" placeholder="Enter task description"></textarea>
+</div>
+
+
+<div class="form-group mt-3">
+    <label for="taskDueDate">Due Date</label>
+    <input type="date" id="taskDueDate" class="form-control" @bind="taskDueDate" />
+</div>
+
+<button class="btn btn-primary mt-3" @onclick="AddTask">Add Task</button>
+
+@if (tasks.Any())
+{
+    <h6 class="mt-3">No of Incomplete Tasks: @incompleteCount</h6>
+    <ul class="list-group mt-3">
+        @foreach (var task in tasks)
+        {
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <strong>Task Name: @task.Name</strong>
+                        <br />
+                        <span>Description: @task.Description</span>
+                        <br />
+                        <small>Due: @task.DueDate.ToString("g")</small>
+                    </div>
+                    <div>
+                        <button class="btn btn-success btn-sm" @onclick="() => MarkTaskCompletion(task)">
+                            @(task.IsCompleted ? "Mark Incomplete" : "Mark Complete")
+                        </button>
+                        <button class="btn btn-warning btn-sm" @onclick="() => EditTask(task)">
+                            Edit
+                        </button>
+                        <button class="btn btn-danger btn-sm" @onclick="() => DeleteTask(task)">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}else
+{
+    <h6 class="mt-3">No Tasks Available</h6>
+}
+
+@code {
+    private string taskName;
+    private string taskDescription;
+    private DateTime taskDueDate = DateTime.Now;
+    private List<TaskItems> tasks = new List<TaskItems>();
+    private int incompleteCount => tasks.Count(task => !task.IsCompleted);
+
+    private void AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(taskName))
+        {
+            tasks.Add(new TaskItems
+            {
+                Name = taskName,
+                Description = taskDescription,
+                DueDate = taskDueDate,
+                IsCompleted = false
+            });
+            ResetForm();
+        }
+    }
+
+    private void MarkTaskCompletion(TaskItems task)
+    {
+        task.IsCompleted = !task.IsCompleted;
+    }
+
+    private void DeleteTask(TaskItems task)
+    {
+        tasks.Remove(task);
+    }
+
+    private void EditTask(TaskItems task)
+    {
+        taskName = task.Name;
+        taskDescription = task.Description;
+        taskDueDate = task.DueDate;
+        tasks.Remove(task); 
+    }
+
+    private void ResetForm()
+    {
+        taskName = string.Empty;
+        taskDescription = string.Empty;
+        taskDueDate = DateTime.Now;
+    }
+
+}
