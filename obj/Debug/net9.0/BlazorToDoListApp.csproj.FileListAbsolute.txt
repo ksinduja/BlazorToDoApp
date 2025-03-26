@@ -100,3 +100,4 @@
 /Users/indujasivakumar/Documents/C# blazor/BlazorToDoListApp/BlazorToDoListApp/obj/Debug/net9.0/BlazorTo.D49AA7DD.Up2Date
 /Users/indujasivakumar/Documents/C# blazor/BlazorToDoListApp/BlazorToDoListApp/obj/Debug/net9.0/compressed/qwanstz9n1-cfxgjkffsk.gz
 /Users/indujasivakumar/Documents/C# blazor/BlazorToDoListApp/BlazorToDoListApp/obj/Debug/net9.0/compressed/i4eks9v5kr-cfxgjkffsk.gz
+/Users/indujasivakumar/Documents/C# blazor/BlazorToDoListApp/BlazorToDoListApp/obj/Debug/net9.0/BlazorToDoListApp.sourcelink.json
